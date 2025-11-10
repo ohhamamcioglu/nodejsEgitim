@@ -1,6 +1,6 @@
 //import path from 'path';
 //import fs from 'fs';   //senkron islem yaparken kullanilir fs.readFileSync()
-import fsp from 'node:fs/promises'; //async işlemler için promises modülünü kullanilir await fs.readFile()
+//import fsp from 'node:fs/promises'; //async işlemler için promises modülünü kullanilir await fs.readFile()
 
 /*console.log(path.resolve());*/
 
