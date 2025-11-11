@@ -1,6 +1,6 @@
 //import path from 'path';
 //import fs from 'fs';   //senkron islem yaparken kullanilir fs.readFileSync()
-//import fsp from 'node:fs/promises'; //async işlemler için promises modülünü kullanilir await fs.readFile()
+import fsp from 'node:fs/promises'; //async işlemler için promises modülünü kullanilir await fs.readFile()
 
 /*console.log(path.resolve());*/
 
@@ -25,5 +25,40 @@ const dosyalar = await fsp.readdir('./');
 console.log(dosyalar);
 */
 
-// Youtube 01:03:49 dan devam et
+const DATABASE_FILE = 'src/data/data.json'
 
+async function dosyaOku(){
+  try {
+    const data = await fsp.readFile(DATABASE_FILE, 'utf-8');
+    return JSON.parse(data);
+
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
+async function ogrencıEkle(yeniOgrenci){
+  try {
+    await fsp.writeFile(DATABASE_FILE, JSON.stringify(yeniOgrenci),null,2)
+
+  } catch (error) {
+    console.log("error:", error);
+
+  }
+}
+
+const yeniOgrenciData = {
+  id: 2,
+  isim: "Mehmet",
+  puan: "86",
+  ders: "İng"
+};
+
+async function main() {
+  const tümOgrenciler = await dosyaOku();
+  tümOgrenciler.push(yeniOgrenciData);
+  await ogrencıEkle(tümOgrenciler);
+
+}
+
+main();
