@@ -1,64 +1,75 @@
-//import path from 'path';
-//import fs from 'fs';   //senkron islem yaparken kullanilir fs.readFileSync()
-import fsp from 'node:fs/promises'; //async işlemler için promises modülünü kullanilir await fs.readFile()
+import express from 'express';
+import { pinoHttp } from 'pino-http';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { dosyaOku, ogrenciEkle } from './utils/file.js';
+//import PinoPretty from 'pino-pretty';
 
-/*console.log(path.resolve());*/
+const app = express();
 
-//asenkron dosya icerigi okuma "node:fs/promises ile"
-/*const data = await fsp.readFile('data.txt', 'utf-8');
-console.log(data); */
+dotenv.config();
 
-// Senkron dosya icerigi okuma
+const PORT = process.env.PORT;
 
-/* fs.readFile('data.txt', 'utf-8', (err,data) => {
-  console.log(data);
-} ); */
+app.use(cors());
 
+app.use(express.json()); //gelen butun istekleri json alabil..
 
-// Dosya ismi degistirme
-/* await fsp.rename('data.txt' , 'yeni-data.txt'); */
+//app.use("/ogrenci", ()=>{}); //sadece ogrenci gelen istekleri kontrol et
 
+//app.use("*", ()=>{}); //tum istekleri kontrol et
 
-// Dosyalarin isimlerini klasorun icinde ne var ne yok onu verir/
-/*
-const dosyalar = await fsp.readdir('./');
-console.log(dosyalar);
-*/
+//yine tum istekleri kontrol et
+/* app.use((req,res,next)=>{
+  //console.log(`url: ${req.url}, method: ${req.method}, date: ${new Date()}`);//loglama sistemi paketler de kurabiliyoruz bunu yerine
+  next();
+}); */
 
-const DATABASE_FILE = 'src/data/data.json'
-
-async function dosyaOku(){
-  try {
-    const data = await fsp.readFile(DATABASE_FILE, 'utf-8');
-    return JSON.parse(data);
-
-  } catch (error) {
-    console.log("error:", error);
+app.use(pinoHttp({
+  transport: {
+    target: 'pino-pretty'
   }
-}
+}));
 
-async function ogrencıEkle(yeniOgrenci){
-  try {
-    await fsp.writeFile(DATABASE_FILE, JSON.stringify(yeniOgrenci),null,2)
+/* app.use((error,req,res,next)=>{
+  console.log('Hata');
+}); */
 
-  } catch (error) {
-    console.log("error:", error);
+app.get('/', (req,res) => {
+  res.send('Anasayfa');
+});
 
-  }
-}
+/*const ogrenci = {
+  id: 4,
+  isim: 'Aziz',
+  puan: 60,
+  dil: 'Turkce',
+};*/
 
-const yeniOgrenciData = {
-  id: 2,
-  isim: "Mehmet",
-  puan: "86",
-  ders: "İng"
-};
+app.get("/ogrenci", async (req,res)=>{
+  const data =await dosyaOku();
+  res.json({
+    mesaj: 'ogrenci listesi',
+    datasyi: data.length,
+    durum: 'basarili',
+    durumkod: 200,
+    data: data
+  });
+});
 
-async function main() {
-  const tümOgrenciler = await dosyaOku();
-  tümOgrenciler.push(yeniOgrenciData);
-  await ogrencıEkle(tümOgrenciler);
+app.post("/ogrenci", async (req,res) =>{
+  const gelendata = req.body;
+  const tumData = await dosyaOku();
+  tumData.push(gelendata);
+  await ogrenciEkle(tumData);
+  res.json({
+    mesaj: "ogrenci basariyla kaydedildi.",
+    durum: 'OK',
+    durumkod: 201,
+    data: gelendata,
+  });
+} );
 
-}
-
-main();
+app.listen(PORT,()=>{
+  console.log('server baslatildi...');
+});

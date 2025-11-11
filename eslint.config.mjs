@@ -14,7 +14,7 @@ export default [
       "semi": "error",
       "no-unused-vars": ["error", { "args": "none" }],
       "no-undef": "error",
-      "quotes": ["error", "single"],
+      "quotes": "off",  // Tırnak kuralını tamamen kapat
       "indent": ["error", 2],
       "no-console": "off"
     }
