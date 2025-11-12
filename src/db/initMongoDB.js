@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const initMongoDB = async()=>{
   try {
     const {MONGO_USER,MONGO_PASSWORD,MONGO_URL,MONGO_DB,MONGO_OPTIONS} = process.env;
