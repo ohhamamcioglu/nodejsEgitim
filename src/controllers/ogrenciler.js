@@ -1,6 +1,7 @@
-import { getOgrenci, getOgrenciler } from "../services/ogrenciler.js";
+import createHttpError from 'http-errors';
+import { getOgrenci, getOgrenciler } from '../services/ogrenciler.js';
 
-export const getOgrencilerController =  async (req, res) => {
+export const getOgrencilerController = async (req, res) => {
   const data = await getOgrenciler();
   res.status(200).send({
     mesaj: 'Ogrenciler',
@@ -8,18 +9,22 @@ export const getOgrencilerController =  async (req, res) => {
   });
 };
 
-export const getOgrenciController = async (req,res) => {
+export const getOgrenciController = async (req, res) => {
   const ogrenciId = req.params.ogrenciId;
   const data = await getOgrenci(ogrenciId);
-  if(!data){
+  /*if (!data) {
     res.status(404).send({
-      mesaj:'Öğrenci Datası Yok...'
+      mesaj: 'Öğrenci Datası Yok...',
+    });
+  }*/
+  if (!data) {
+    throw createHttpError({
+      mesaj: "Ogrenci Bulunamadı...",
+      durum: "404"
     });
   }
   res.status(200).send({
     mesaj: 'Öğrenci Datası',
-    data: data
+    data: data,
   });
-
 };
-

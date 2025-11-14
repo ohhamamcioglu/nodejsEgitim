@@ -3,6 +3,8 @@ import { pinoHttp } from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import ogrenciRouter from './routers/ogrenciler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 dotenv.config();
 
@@ -29,19 +31,9 @@ export const createServer = () => {
 
   app.use('/ogrenciler', ogrenciRouter);
 
-  app.use((req, res) => {
-    res.status(404).send({
-      durum: 404,
-      mesaj: 'Sayfa Bulunamadı..',
-    });
-  }); //En son da kullanılır
+  app.use(notFoundHandler); //En son da kullanılır
 
-  app.use((err,req,res,next)=>{
-    res.status(500).send({
-      mesaj: 'Sunucu Hatası..',
-      durum: 500
-    });
-  });
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log('server baslatildi...');
