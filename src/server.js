@@ -27,7 +27,7 @@ export const createServer = () => {
     res.send('Anasayfa');
   });
 
-  app.use(ogrenciRouter);
+  app.use('/ogrenciler', ogrenciRouter);
 
   app.use((req, res) => {
     res.status(404).send({
@@ -35,6 +35,13 @@ export const createServer = () => {
       mesaj: 'Sayfa Bulunamadı..',
     });
   }); //En son da kullanılır
+
+  app.use((err,req,res,next)=>{
+    res.status(500).send({
+      mesaj: 'Sunucu Hatası..',
+      durum: 500
+    });
+  });
 
   app.listen(PORT, () => {
     console.log('server baslatildi...');

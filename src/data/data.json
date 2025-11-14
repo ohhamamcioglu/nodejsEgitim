@@ -1,1 +1,16 @@
-[{"id":1,"isim":"Ömer Hilmi","puan":"85","ders":"Mat"},{"id":2,"isim":"Mehmet","puan":"86","ders":"İng"},{"id":2,"isim":"Mehmet","puan":"86","ders":"İng"},{"id":2,"isim":"Mehmet","puan":"86","ders":"İng"},{"id":2,"isim":"Mehmet","puan":"86","ders":"İng"},{"id":1,"isim":"Ömer","puan":"15","ders":"Fen"},{"id":1,"isim":"Ömer","puan":"15","ders":"Fen"},{"id":1,"isim":"Ömer","puan":"15","ders":"Fen"},{"id":1,"isim":"Ömer","puan":"15","ders":"Fen"},{"id":1,"isim":"Ömer","puan":"15","ders":"Fen"},{"id":7,"isim":"halime","puan":"15","ders":"Fen"}]
+[
+  { "id": 1, "isim": "Ömer Hilmi", "puan": "85", "ders": "Mat" },
+  { "id": 2, "isim": "Mehmet", "puan": "86", "ders": "İng" },
+  { "id": 2, "isim": "Mehmet", "puan": "86", "ders": "İng" },
+  { "id": 2, "isim": "Mehmet", "puan": "86", "ders": "İng" },
+  { "id": 2, "isim": "Mehmet", "puan": "86", "ders": "İng" },
+  { "id": 1, "isim": "Ömer", "puan": "15", "ders": "Fen" },
+  { "id": 1, "isim": "Ömer", "puan": "15", "ders": "Fen" },
+  { "id": 1, "isim": "Ömer", "puan": "15", "ders": "Fen" },
+  { "id": 1, "isim": "Ömer", "puan": "15", "ders": "Fen" },
+  { "id": 1, "isim": "Ömer", "puan": "15", "ders": "Fen" },
+  { "id": 7, "isim": "halime", "puan": "15", "ders": "Fen" },
+  { "id": 1, "isim": "Ömer", "puan": "15", "ders": "Fen" },
+  { "id": 1, "isim": "Mahmut", "puan": "85", "ders": "Red" },
+  { "id": 1, "isim": "Mahmut", "puan": "85", "ders": "Red" }
+]
